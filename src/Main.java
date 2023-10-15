@@ -9,6 +9,10 @@ import jade.wrapper.StaleProxyException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Main  {
     public static void main(String args[]) throws StaleProxyException {
         Profile p = new ProfileImpl();
@@ -23,25 +27,24 @@ public class Main  {
 
         System.out.println("Field Agent initialized");
 
-        var controller1 = cc.createNewAgent("Test1", "ConsumerAgent", new Object[]{(Object)context});
-        var controller2 = cc.createNewAgent("Test2", "ConsumerAgent", new Object[]{(Object)context});
-        var controller3 = cc.createNewAgent("Test3", "ConsumerAgent", new Object[]{(Object)context});
-        var controller4 = cc.createNewAgent("Test4", "ConsumerAgent", new Object[]{(Object)context});
-        controller1.start();
-        controller2.start();
-        controller3.start();
-        controller4.start();
 
-        EventQueue.invokeLater(new Runnable() {
+        for(int i = 0; i < 10; i++){
+            var controller = cc.createNewAgent("ConsumerAgent_"+i, "ConsumerAgent", new Object[]{(Object)context});
+            controller.start();
+        }
+
+        for(int i = 0; i < 2; i++){
+            var controller = cc.createNewAgent("DroneAgent_"+i, "DroneAgent", new Object[]{(Object)context});
+            controller.start();
+        }
+
+        field.setVisible(true);
+        new Timer("Drawer", true).scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                try {
-                    field.setVisible(true);
-                } catch (Exception e) {
-
-                }
+                field.repaint();
             }
-        });
+        }, 100, (int)1000/60);
     }
 }
 

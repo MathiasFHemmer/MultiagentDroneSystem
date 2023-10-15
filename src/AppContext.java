@@ -6,10 +6,13 @@ import java.util.*;
 public class AppContext {
     public JFrame UI;
     public ContainerController JadeContainer;
-    public HashMap<UUID, Transform> ConsumersTransform;
+    public List<Entity> ConsumersTransform;
+    public List<Entity> DronesTranform;
 
     public AppContext(ContainerController jadeContainer){
-        ConsumersTransform = new HashMap<>();
+        ConsumersTransform = new ArrayList<>();
+        DronesTranform = new ArrayList<>();
         JadeContainer = jadeContainer;
     }
 }
+

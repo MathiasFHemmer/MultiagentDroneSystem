@@ -28,9 +28,14 @@ class ScreenDrawer extends JPanel{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Context.ConsumersTransform.forEach((key, transform) -> {
+        Context.ConsumersTransform.forEach(entity -> {
             g.setColor(Color.GREEN);
-            g.fillOval((int)transform.PosX, (int)transform.PosY, transform.Radius, transform.Radius);
+            g.fillOval((int)entity.Transform.Position.x, (int)entity.Transform.Position.y, entity.Transform.Radius, entity.Transform.Radius);
+        });
+
+        Context.DronesTranform.forEach(entity -> {
+            g.setColor(Color.BLUE);
+            g.fillOval((int)entity.Transform.Position.x, (int)entity.Transform.Position.y, entity.Transform.Radius, entity.Transform.Radius);
         });
     }
 }
